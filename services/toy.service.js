@@ -12,7 +12,6 @@ export const toyService = {
 }
 
 function query(filterBy = {}) {
-
   let filteredToys = toys
   if (!filterBy.txt) filterBy.txt = ''
   if (!filterBy.maxPrice) filterBy.maxPrice = Infinity
@@ -48,13 +47,13 @@ function query(filterBy = {}) {
 
 function get(toyId) {
   const toy = toys.find((toy) => toy._id === toyId)
-  if (!toy) return Promise.reject('Toy not found')
+  if (!toy) return Promise.reject(new Error(`Toy with ID ${toyId} not found`)) 
   return Promise.resolve(toy)
 }
 
 function remove(toyId) {
   const idx = toys.findIndex((toy) => toy._id === toyId)
-  if (idx === -1) return Promise.reject('No such toy')
+  if (idx === -1) return Promise.reject(new Error(`Toy with ID ${toyId} not found`)) 
   toys.splice(idx, 1)
   return _saveToysToFile()
 }

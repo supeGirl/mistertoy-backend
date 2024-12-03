@@ -32,11 +32,21 @@ app.use(cors(corsOptions))
 app.get('/api/toy', (req, res) => {
   const {txt, inStock = null, pageIdx, sortBy, labels = []} = req.query
 
+  // Ensure sortBy is valid
+  let parsedSortBy = null
+  if (sortBy) {
+    try {
+      parsedSortBy = JSON.parse(sortBy)
+    } catch (err) {
+      loggerService.error('Invalid sortBy format:', err)
+    }
+  }
+
   const filterBy = {
     txt,
     inStock,
     pageIdx: +pageIdx || 0,
-    sortBy: sortBy ? JSON.parse(sortBy) : null,
+    sortBy: parsedSortBy,
     labels: Array.isArray(labels) ? labels : [labels].filter(Boolean),
   }
 
@@ -46,8 +56,8 @@ app.get('/api/toy', (req, res) => {
       res.send(toys)
     })
     .catch((err) => {
-      loggerService.error('Cannot load toys', err)
-      res.status(500).send('Cannot load toys')
+      loggerService.error(`Error fetching toy with ID ${toyId}:`, err)
+      res.status(500).send(`Cannot get toy: ${err.message}`)
     })
 })
 
@@ -113,8 +123,8 @@ app.delete('/api/toy/:toyId', (req, res) => {
       res.send({msg, toyId})
     })
     .catch((err) => {
-      loggerService.error('Cannot delete toy', err)
-      res.status(500).send('Cannot delete toy, ' + err)
+      loggerService.error(`Error deleting toy with ID ${toyId}:`, err)
+      res.status(500).send(`Cannot delete toy: ${err.message}`)
     })
 })
 
