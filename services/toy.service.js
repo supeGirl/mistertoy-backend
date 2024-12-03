@@ -28,8 +28,7 @@ function query(filterBy = {}) {
     filteredToys = filteredToys.filter((toy) => filterBy.labels.some((label) => toy.labels.includes(label)))
   }
 
-  const {sortBy} = filterBy
-  if (filterBy.sortBy.type) {
+  if (filterBy.sortBy?.type) {
     filteredToys.sort((t1, t2) => {
       const sortDirection = sortBy.desc ? -1 : 1
       if (sortBy.type === 'name') {
@@ -39,9 +38,8 @@ function query(filterBy = {}) {
       }
     })
   }
-  const {pageIdx} = filterBy
   if (filterBy.pageIdx !== undefined) {
-    let startIdx = +pageIdx * PAGE_SIZE
+    let startIdx = +filterBy.pageIdx * PAGE_SIZE
     filteredToys = filteredToys.slice(startIdx, startIdx + PAGE_SIZE)
   }
 

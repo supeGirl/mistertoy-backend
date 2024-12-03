@@ -3,8 +3,8 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
-import { loggerService } from './services/logger.service.js'
-import { toyService } from './services/toy.service.js'
+import {loggerService} from './services/logger.service.js'
+import {toyService} from './services/toy.service.js'
 
 const app = express()
 
@@ -27,61 +27,65 @@ app.use(cookieParser()) // for res.cookies
 app.use(express.json()) // for req.body
 app.use(cors(corsOptions))
 
-
 // **************** Toys API ****************:
 // GET toys
 app.get('/api/toy', (req, res) => {
+  const {txt, inStock = null, pageIdx, sortBy, labels = []} = req.query
 
-  const { txt, inStock = null, pageIdx, sortBy, labels = [] } = req.query
+  const filterBy = {
+    txt,
+    inStock,
+    pageIdx: +pageIdx || 0,
+    sortBy: sortBy ? JSON.parse(sortBy) : null,
+    labels: Array.isArray(labels) ? labels : [labels].filter(Boolean),
+  }
 
-  const filterBy = { txt, inStock, pageIdx: +pageIdx, sortBy, labels }
-
-  toyService.query(filterBy)
-    .then(toys => {
+  toyService
+    .query(filterBy)
+    .then((toys) => {
       res.send(toys)
     })
-    .catch(err => {
+    .catch((err) => {
       loggerService.error('Cannot load toys', err)
       res.status(500).send('Cannot load toys')
     })
 })
 
 app.get('/api/toy/:toyId', (req, res) => {
+  const {toyId} = req.params
 
-  const { toyId } = req.params
-
-  toyService.get(toyId)
-    .then(toy => {
+  toyService
+    .get(toyId)
+    .then((toy) => {
       res.send(toy)
     })
-    .catch(err => {
+    .catch((err) => {
       loggerService.error('Cannot get toy', err)
       res.status(500).send(err)
     })
 })
 
 app.post('/api/toy', (req, res) => {
-
-  const { name, price, labels } = req.body
+  const {name, price, labels} = req.body
   const toy = {
     name,
     price: +price,
     labels,
   }
 
-  toyService.save(toy)
-    .then(savedToy => {
+  toyService
+    .save(toy)
+    .then((savedToy) => {
       res.send(savedToy)
     })
-    .catch(err => {
+    .catch((err) => {
       loggerService.error('Cannot add toy', err)
       res.status(500).send('Cannot add toy')
     })
 })
 
 app.put('/api/toy', (req, res) => {
-
-  const { name, price, _id, labels } = req.body
+  const {name, price, _id, labels} = req.body
   const toy = {
     _id,
     name,
@@ -89,25 +93,26 @@ app.put('/api/toy', (req, res) => {
     labels,
   }
 
-  toyService.save(toy)
-    .then(savedToy => {
+  toyService
+    .save(toy)
+    .then((savedToy) => {
       res.send(savedToy)
     })
-    .catch(err => {
+    .catch((err) => {
       loggerService.error('Cannot update toy', err)
       res.status(500).send('Cannot update toy')
     })
 })
 
 app.delete('/api/toy/:toyId', (req, res) => {
+  const {toyId} = req.params
 
-  const { toyId } = req.params
-
-  toyService.remove(toyId)
-    .then(msg => {
-      res.send({ msg, toyId })
+  toyService
+    .remove(toyId)
+    .then((msg) => {
+      res.send({msg, toyId})
     })
-    .catch(err => {
+    .catch((err) => {
       loggerService.error('Cannot delete toy', err)
       res.status(500).send('Cannot delete toy, ' + err)
     })
