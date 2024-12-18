@@ -1,0 +1,11 @@
+{
+    "welcome": "Welcome to React Toy App",
+    "home": "Home",
+    "about": "About",
+    "toys": "Toys",
+    "dashboard": "Dashboard",
+    "cart": "Cart",
+    "hello": "Hello",
+    "logout": "Logout"
+  }
+  

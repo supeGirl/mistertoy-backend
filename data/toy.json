@@ -1,0 +1,128 @@
+[
+    {
+        "name": "Fun Wheels",
+        "price": 44,
+        "labels": [
+            "On wheels",
+            "Outdoor"
+        ],
+        "createAt": 1701017600000,
+        "owner": "admin"
+    },
+    {
+        "name": "Creative Puzzle",
+        "price": 40,
+        "labels": [
+            "Puzzle",
+            "Art"
+        ],
+        "inStock": false,
+        "createAt": 1701104000000,
+        "owner": "admin"
+    },
+    {
+        "name": "Baby Doll",
+        "price": 15,
+        "labels": [
+            "Baby",
+            "Doll"
+        ],
+        "inStock": true,
+        "createAt": 1701190400000,
+        "owner": "admin"
+    },
+    {
+        "name": "Battery Car",
+        "price": 55,
+        "labels": [
+            "On wheels",
+            "Battery Powered"
+        ],
+        "inStock": false,
+        "createAt": 1701276800000,
+        "owner": "admin"
+    },
+    {
+        "name": "Art Kit",
+        "price": 55,
+        "labels": [
+            "Art"
+        ],
+        "inStock": true,
+        "createAt": 1701363200000,
+        "owner": "admin"
+    },
+    {
+        "name": "Outdoor Adventure",
+        "price": 70,
+        "labels": [
+            "Outdoor"
+        ],
+        "inStock": false,
+        "createAt": 1701449600000,
+        "owner": "admin"
+    },
+    {
+        "name": "Puzzle Game",
+        "price": 20,
+        "labels": [
+            "Puzzle",
+            "Box game"
+        ],
+        "inStock": true,
+        "createAt": 1701536000000,
+        "owner": "admin"
+    },
+    {
+        "name": "Toddler Toy",
+        "price": 10,
+        "labels": [
+            "Baby",
+            "On wheels"
+        ],
+        "inStock": false,
+        "createAt": 1701622400000,
+        "owner": "admin"
+    },
+    {
+        "name": "Doll House",
+        "price": 100,
+        "labels": [
+            "Doll"
+        ],
+        "inStock": true,
+        "createAt": 1701708800000,
+        "owner": "admin"
+    },
+    {
+        "name": "Box Challenge",
+        "price": 45,
+        "labels": [
+            "Box game"
+        ],
+        "inStock": false,
+        "createAt": 1701795200000,
+        "owner": "admin"
+    },
+    {
+        "name": "Battery Robot",
+        "price": 60,
+        "labels": [
+            "Battery Powered"
+        ],
+        "inStock": true,
+        "createAt": 1701881600000,
+        "owner": "admin"
+    },
+    {
+        "name": "Outdoor Fun",
+        "price": 35,
+        "labels": [
+            "Outdoor",
+            "Baby"
+        ],
+        "inStock": true,
+        "createAt": 1701968000000,
+        "owner": "admin"
+    }
+]
