@@ -17,7 +17,6 @@ async function login(username, password) {
      loggerService .debug(`auth.service - login with username: ${username}`)
 
     const user = await userService.getByUsername(username)
-    console.log(user, 'user from the login auth');
     
     if (!user) throw new Error('Invalid username or password')
 

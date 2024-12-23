@@ -8,6 +8,7 @@ export async function getToys(req, res) {
       maxPrice: +req.query.maxPrice || 0,
       labels: req.query.labels || [],
       inStock: req.query.inStock || '',
+      sortBy: req.query.sortBy,
       pageIdx: isNaN(+req.query.pageIdx) ? 0 : +req.query.pageIdx,
     }
 
@@ -16,13 +17,13 @@ export async function getToys(req, res) {
     res.json(toys)
   } catch (err) {
     loggerService.error('Error fetching toys:', err)
-    res.status(500).send(`Cannot get toys: ${err.message}`)
+    res.status(500).send({err: `Cannot get toys`})
   }
 }
 
 export async function getToyById(req, res) {
   const toyId = req.params.id
-  
+
   try {
     const toy = await toyService.get(toyId)
 
@@ -50,7 +51,9 @@ export async function addToy(req, res) {
 export async function updateToy(req, res) {
   try {
     const toy = {...req.body, _id: req.params.id}
+    console.log(toy)
     const updatedToy = await toyService.update(toy)
+    console.log(updateToy)
     res.json(updatedToy)
   } catch (err) {
     loggerService.error(`Faild to update toy, ${err}`)
@@ -72,17 +75,17 @@ export async function removeToy(req, res) {
 
 export async function addToyMsg(req, res) {
   const {loggedinUser} = req
-  
+
   try {
     const toyId = req.params.id
     const msg = {
       txt: req.body.txt,
+      rating: +req.body.rating,
       by: loggedinUser,
-      createdAt: Date.now(),
     }
+    console.log(msg)
+
     const savedMsg = await toyService.addToyMsg(toyId, msg)
-    console.log(savedMsg, 'savedmsg');
-    
     res.json(savedMsg)
   } catch (err) {
     loggerService.error('Failed to add massege', err)
@@ -93,9 +96,6 @@ export async function addToyMsg(req, res) {
 export async function removeToyMsg(req, res) {
   try {
     const {id: toyId, msgId} = req.params
-    console.log(toyId ,'toy id from delete msg controller');
-    console.log(msgId ,'msg id from delete msg controller');
-    
 
     const removedId = await toyService.removeToyMsg(toyId, msgId)
     res.send(removedId)
